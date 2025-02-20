@@ -1,5 +1,6 @@
 mod controle;
 mod iu;
+mod symboles;
 
 use color_eyre::Result;
 use crossterm::terminal::{EnterAlternateScreen, LeaveAlternateScreen};

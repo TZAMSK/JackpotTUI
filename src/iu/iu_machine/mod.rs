@@ -1,14 +1,15 @@
 use ratatui::{
     layout::{Alignment, Constraint, Direction, Layout, Rect},
     style::{Color, Style},
-    widgets::{Block, BorderType, Borders, Paragraph},
+    widgets::{Block, BorderType, Borders, Padding, Paragraph},
     Frame,
 };
 
-use crate::iu::constants::{CONTENUE, CONTROLES, SYMBOLES, TITRE, TITRE_APPLICATION};
+use crate::iu::constants::{CONTENUE, CONTROLES, TITRE, TITRE_APPLICATION};
+use crate::symboles::{Symbole, Type};
 
 pub fn afficher_machine(frame: &mut Frame, zone_principal: Rect) {
-    let main_layout = Layout::default()
+    let layout_principal = Layout::default()
         .direction(Direction::Vertical)
         .constraints(
             [
@@ -24,9 +25,9 @@ pub fn afficher_machine(frame: &mut Frame, zone_principal: Rect) {
     let titre_application = Paragraph::new(TITRE_APPLICATION)
         .alignment(Alignment::Center)
         .style(Style::default().fg(Color::Red));
-    frame.render_widget(titre_application, main_layout[0]);
+    frame.render_widget(titre_application, layout_principal[0]);
 
-    let reel_layout = Layout::default()
+    let layout_rouleaux = Layout::default()
         .direction(Direction::Horizontal)
         .constraints(
             [
@@ -36,19 +37,27 @@ pub fn afficher_machine(frame: &mut Frame, zone_principal: Rect) {
             ]
             .as_ref(),
         )
-        .split(main_layout[1]);
+        .split(layout_principal[1]);
 
-    for (index, symbole) in SYMBOLES.iter().enumerate() {
+    let citron = Symbole {
+        type_: Type::Citron,
+    };
+
+    let symboles = [citron.dessin(), citron.dessin(), citron.dessin()];
+
+    for (index, symbole) in symboles.iter().enumerate() {
         frame.render_widget(
             Paragraph::new(symbole.to_string())
                 .alignment(Alignment::Center)
+                .style(Style::default().fg(Color::Magenta))
                 .block(
                     Block::new()
+                        .padding(Padding::uniform(4))
                         .borders(Borders::ALL)
                         .border_type(BorderType::QuadrantInside)
                         .style(Style::default().fg(Color::Magenta)),
                 ),
-            reel_layout[index],
+            layout_rouleaux[index],
         );
     }
 
@@ -62,7 +71,7 @@ pub fn afficher_machine(frame: &mut Frame, zone_principal: Rect) {
             ]
             .as_ref(),
         )
-        .split(main_layout[2]);
+        .split(layout_principal[2]);
 
     for ((index, titre), contenue) in TITRE.iter().enumerate().zip(CONTENUE.iter()) {
         let couleur = match index {
@@ -82,5 +91,5 @@ pub fn afficher_machine(frame: &mut Frame, zone_principal: Rect) {
         );
     }
 
-    frame.render_widget(Paragraph::new(CONTROLES), main_layout[3])
+    frame.render_widget(Paragraph::new(CONTROLES), layout_principal[3])
 }
