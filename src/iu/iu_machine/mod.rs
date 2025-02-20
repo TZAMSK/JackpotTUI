@@ -1,24 +1,32 @@
 use ratatui::{
     layout::{Alignment, Constraint, Direction, Layout, Rect},
     style::{Color, Style},
-    widgets::{Block, Borders, Paragraph},
+    widgets::{Block, BorderType, Borders, Paragraph},
     Frame,
 };
 
+use crate::iu::constants::{CONTENUE, SYMBOLES, TITRE, TITRE_APPLICATION};
+
 pub fn afficher_machine(frame: &mut Frame, zone_principal: Rect) {
-    let disposition_principale = Layout::default()
+    let main_layout = Layout::default()
         .direction(Direction::Vertical)
         .constraints(
             [
-                Constraint::Ratio(3, 5),
-                Constraint::Ratio(1, 5),
-                Constraint::Ratio(1, 5),
+                Constraint::Ratio(1, 7),
+                Constraint::Ratio(4, 7),
+                Constraint::Ratio(1, 7),
+                Constraint::Ratio(1, 7),
             ]
             .as_ref(),
         )
         .split(zone_principal);
 
-    let disposition_machine = Layout::default()
+    let titre_application = Paragraph::new(TITRE_APPLICATION)
+        .alignment(Alignment::Center)
+        .style(Style::default().fg(Color::Red));
+    frame.render_widget(titre_application, main_layout[0]);
+
+    let reel_layout = Layout::default()
         .direction(Direction::Horizontal)
         .constraints(
             [
@@ -28,72 +36,49 @@ pub fn afficher_machine(frame: &mut Frame, zone_principal: Rect) {
             ]
             .as_ref(),
         )
-        .split(disposition_principale[0]);
+        .split(main_layout[1]);
 
-    let rouleaux = ["🍒", "🍋", "🔔"];
-    for (i, rouleau) in disposition_machine.iter().enumerate() {
+    for (index, symbole) in SYMBOLES.iter().enumerate() {
         frame.render_widget(
-            Paragraph::new(rouleaux[i])
-                .block(Block::default().borders(Borders::ALL))
+            Paragraph::new(symbole.to_string())
                 .alignment(Alignment::Center)
-                .style(Style::default().fg(Color::Yellow)),
-            *rouleau,
+                .block(
+                    Block::new()
+                        .borders(Borders::ALL)
+                        .border_type(BorderType::QuadrantInside)
+                        .style(Style::default().fg(Color::Magenta)),
+                ),
+            reel_layout[index],
         );
     }
 
-    let disposition_info = Layout::default()
-        .direction(Direction::Horizontal)
-        .constraints([Constraint::Ratio(1, 2), Constraint::Ratio(1, 2)].as_ref())
-        .split(disposition_principale[1]);
-
-    frame.render_widget(
-        Paragraph::new("🍒🍒🍒 = 10%\n🍋🍋🍋 = 5%\n🔔🔔🔔 = 2%")
-            .block(Block::default().borders(Borders::ALL).title("Possibilités"))
-            .alignment(Alignment::Left),
-        disposition_info[0],
-    );
-
-    frame.render_widget(
-        Paragraph::new("🍒🍒🍒 = $100\n🍋🍋🍋 = $200\n🔔🔔🔔 = $500")
-            .block(Block::default().borders(Borders::ALL).title("Paiements"))
-            .alignment(Alignment::Left),
-        disposition_info[1],
-    );
-
-    let disposition_montants_action = Layout::default()
+    let info_layout = Layout::default()
         .direction(Direction::Horizontal)
         .constraints(
             [
-                Constraint::Ratio(4, 10),
-                Constraint::Ratio(3, 10),
-                Constraint::Ratio(3, 10),
+                Constraint::Ratio(2, 7),
+                Constraint::Ratio(2, 7),
+                Constraint::Ratio(3, 7),
             ]
             .as_ref(),
         )
-        .split(disposition_principale[2]);
+        .split(main_layout[2]);
 
-    frame.render_widget(
-        Paragraph::new("Wagered: $10")
-            .block(Block::default().borders(Borders::ALL))
-            .alignment(Alignment::Center),
-        disposition_montants_action[0],
-    );
+    for ((index, titre), contenue) in TITRE.iter().enumerate().zip(CONTENUE.iter()) {
+        let couleur = match index {
+            0 | 1 => Color::Yellow,
+            _ => Color::Green,
+        };
 
-    frame.render_widget(
-        Paragraph::new("Total: $1000")
-            .block(Block::default().borders(Borders::ALL))
-            .alignment(Alignment::Center),
-        disposition_montants_action[1],
-    );
-
-    frame.render_widget(
-        Paragraph::new("[ESPACE] TOURNER")
-            .block(
-                Block::default()
+        frame.render_widget(
+            Paragraph::new(contenue.to_string()).block(
+                Block::new()
                     .borders(Borders::ALL)
-                    .style(Style::default().fg(Color::Green)),
-            )
-            .alignment(Alignment::Center),
-        disposition_montants_action[2],
-    );
+                    .style(Style::default().fg(couleur))
+                    .title(titre.to_string())
+                    .title_alignment(Alignment::Center),
+            ),
+            info_layout[index],
+        );
+    }
 }
