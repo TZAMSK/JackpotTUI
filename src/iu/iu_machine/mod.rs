@@ -5,17 +5,17 @@ use ratatui::{
     Frame,
 };
 
-use crate::iu::constants::{CONTENUE, SYMBOLES, TITRE, TITRE_APPLICATION};
+use crate::iu::constants::{CONTENUE, CONTROLES, SYMBOLES, TITRE, TITRE_APPLICATION};
 
 pub fn afficher_machine(frame: &mut Frame, zone_principal: Rect) {
     let main_layout = Layout::default()
         .direction(Direction::Vertical)
         .constraints(
             [
-                Constraint::Ratio(1, 7),
-                Constraint::Ratio(4, 7),
-                Constraint::Ratio(1, 7),
-                Constraint::Ratio(1, 7),
+                Constraint::Ratio(2, 10),
+                Constraint::Ratio(6, 10),
+                Constraint::Ratio(1, 10),
+                Constraint::Ratio(1, 10),
             ]
             .as_ref(),
         )
@@ -81,4 +81,6 @@ pub fn afficher_machine(frame: &mut Frame, zone_principal: Rect) {
             info_layout[index],
         );
     }
+
+    frame.render_widget(Paragraph::new(CONTROLES), main_layout[3])
 }
