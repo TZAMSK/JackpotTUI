@@ -1,5 +1,6 @@
-use crate::iu::constants::CITRON_ART;
-use crossterm::style::{Color, Stylize};
+use ratatui::style::Color;
+
+use crate::iu::constants::{CITRON_ART, DIAMAND_ART};
 
 pub enum Type {
     Citron,
@@ -13,13 +14,15 @@ pub enum Type {
 
 pub struct Symbole {
     pub type_: Type,
+    pub couleur_iu: Color,
 }
 
 impl Symbole {
-    pub fn dessin(&self) -> String {
+    pub fn dessin(&self) -> &str {
         match self.type_ {
-            Type::Citron => CITRON_ART.with(Color::Yellow).to_string(),
-            _ => "awd".to_string(),
+            Type::Citron => CITRON_ART,
+            Type::Diamand => DIAMAND_ART,
+            _ => "AWD",
         }
     }
 }

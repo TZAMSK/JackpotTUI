@@ -41,21 +41,26 @@ pub fn afficher_machine(frame: &mut Frame, zone_principal: Rect) {
 
     let citron = Symbole {
         type_: Type::Citron,
+        couleur_iu: Color::Yellow,
     };
 
-    let symboles = [citron.dessin(), citron.dessin(), citron.dessin()];
+    let diamand = Symbole {
+        type_: Type::Diamand,
+        couleur_iu: Color::Blue,
+    };
+
+    let symboles = [&citron, &diamand, &citron];
 
     for (index, symbole) in symboles.iter().enumerate() {
         frame.render_widget(
-            Paragraph::new(symbole.to_string())
+            Paragraph::new(symbole.dessin().to_string())
                 .alignment(Alignment::Center)
-                .style(Style::default().fg(Color::Magenta))
                 .block(
                     Block::new()
-                        .padding(Padding::uniform(4))
+                        .padding(Padding::uniform(8))
                         .borders(Borders::ALL)
                         .border_type(BorderType::QuadrantInside)
-                        .style(Style::default().fg(Color::Magenta)),
+                        .style(Style::default().fg(symbole.couleur_iu)),
                 ),
             layout_rouleaux[index],
         );
