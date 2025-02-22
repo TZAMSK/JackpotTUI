@@ -19,7 +19,7 @@ pub static CONTENUE: [&str; 3] = [
     "TOURNER",
 ];
 
-pub const CONTROLES: &str = "<q> Quitter\n<w>Changer mise\n<e> Changer totale";
+pub const CONTROLES: &str = "<q> Quitter\n<w>Changer mise\n<e> Changer totale\n<espace> Tourner";
 
 pub const CITRON_ART: &str = r"
 ⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⢀⣀⣀⣀⣀⣀⣀⣀⣀⣀⠀⠀⠀⠀⠀
@@ -39,7 +39,7 @@ pub const CITRON_ART: &str = r"
 ⠀⠀⠈⠉⠉⠉⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀
 ";
 
-pub const DIAMAND_ART: &str = r"     
+pub const DIAMANT_ART: &str = r"     
       __________________      
      /\····/\····/\····/\     
    /···\··/··\··/··\··/···\   

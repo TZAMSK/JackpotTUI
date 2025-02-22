@@ -41,15 +41,13 @@ pub fn afficher_machine(frame: &mut Frame, zone_principal: Rect) {
 
     let citron = Symbole {
         type_: Type::Citron,
-        couleur_iu: Color::Yellow,
     };
 
-    let diamand = Symbole {
-        type_: Type::Diamand,
-        couleur_iu: Color::Blue,
+    let diamant = Symbole {
+        type_: Type::Diamant,
     };
 
-    let symboles = [&citron, &diamand, &citron];
+    let symboles = [&citron, &diamant, &citron];
 
     for (index, symbole) in symboles.iter().enumerate() {
         frame.render_widget(
@@ -60,7 +58,7 @@ pub fn afficher_machine(frame: &mut Frame, zone_principal: Rect) {
                         .padding(Padding::uniform(8))
                         .borders(Borders::ALL)
                         .border_type(BorderType::QuadrantInside)
-                        .style(Style::default().fg(symbole.couleur_iu)),
+                        .style(Style::default().fg(symbole.couleur())),
                 ),
             layout_rouleaux[index],
         );
@@ -96,5 +94,5 @@ pub fn afficher_machine(frame: &mut Frame, zone_principal: Rect) {
         );
     }
 
-    frame.render_widget(Paragraph::new(CONTROLES), layout_principal[3])
+    frame.render_widget(Paragraph::new(CONTROLES), layout_principal[3]);
 }
