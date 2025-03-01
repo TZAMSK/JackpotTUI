@@ -6,7 +6,7 @@ use crate::iu::constants::{
     BANANE_ART, BIÈRE_ART, CERISE_ART, CITRON_ART, CLOCHE_ART, DIAMANT_ART, ÉTOILE_ART,
 };
 
-#[derive(Clone)]
+#[derive(Clone, PartialEq)]
 pub enum Type {
     Citron,
     Cloche,
