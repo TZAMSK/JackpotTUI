@@ -12,31 +12,31 @@ impl Mixeur {
             rouleaux: vec![
                 Symbole {
                     type_: Type::Citron,
-                    chance: 20,
+                    pondération: 20,
                 },
                 Symbole {
                     type_: Type::Cloche,
-                    chance: 19,
+                    pondération: 19,
                 },
                 Symbole {
                     type_: Type::Cerise,
-                    chance: 15,
+                    pondération: 15,
                 },
                 Symbole {
                     type_: Type::Bière,
-                    chance: 14,
+                    pondération: 14,
                 },
                 Symbole {
                     type_: Type::Étoile,
-                    chance: 14,
+                    pondération: 14,
                 },
                 Symbole {
                     type_: Type::Banane,
-                    chance: 21,
+                    pondération: 21,
                 },
                 Symbole {
                     type_: Type::Diamant,
-                    chance: 7,
+                    pondération: 7,
                 },
             ],
         }
@@ -44,7 +44,7 @@ impl Mixeur {
 
     pub fn mélanger(&self, liste: &Vec<Symbole>) -> Vec<Symbole> {
         let symboles_pondérés =
-            match WeightedIndex::new(self.rouleaux.iter().map(|symbole| symbole.chance)) {
+            match WeightedIndex::new(self.rouleaux.iter().map(|symbole| symbole.pondération)) {
                 Ok(index) => index,
                 Err(_) => return Vec::new(),
             };

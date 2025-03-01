@@ -20,7 +20,7 @@ pub enum Type {
 #[derive(Clone)]
 pub struct Symbole {
     pub type_: Type,
-    pub chance: u8,
+    pub pondération: u8,
 }
 
 impl Symbole {
