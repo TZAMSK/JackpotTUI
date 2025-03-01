@@ -5,10 +5,12 @@ use ratatui::{
     Frame,
 };
 
-use crate::iu::constants::{CONTENUE, CONTROLES, TITRE, TITRE_APPLICATION};
-use crate::symboles::mixeur::Mixeur;
+use crate::{
+    application::Application,
+    iu::constants::{CONTENUE, CONTROLES, TITRE, TITRE_APPLICATION},
+};
 
-pub fn afficher_machine(frame: &mut Frame, zone_principal: Rect) {
+pub fn afficher_machine(frame: &mut Frame, zone_principal: Rect, application: &mut Application) {
     let layout_principal = Layout::default()
         .direction(Direction::Vertical)
         .constraints(
@@ -39,9 +41,7 @@ pub fn afficher_machine(frame: &mut Frame, zone_principal: Rect) {
         )
         .split(layout_principal[1]);
 
-    let symboles = Mixeur::mélanger_symboles();
-
-    for (index, symbole) in symboles.iter().enumerate() {
+    for (index, symbole) in application.symboles.iter().enumerate() {
         frame.render_widget(
             Paragraph::new(symbole.dessin().to_string())
                 .alignment(Alignment::Center)

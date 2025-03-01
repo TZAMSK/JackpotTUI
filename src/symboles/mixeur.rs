@@ -42,9 +42,16 @@ impl Mixeur {
         }
     }
 
+    pub fn réinitialiser(&mut self) {
+        self.rouleaux = Mixeur::symboles().rouleaux.clone();
+    }
+
     pub fn mélanger(&self, liste: &Vec<Symbole>) -> Vec<Symbole> {
         let symboles_pondérés =
-            WeightedIndex::new(liste.iter().map(|symbole| symbole.chance)).unwrap();
+            match WeightedIndex::new(self.rouleaux.iter().map(|symbole| symbole.chance)) {
+                Ok(index) => index,
+                Err(_) => return Vec::new(),
+            };
 
         let mut symboles = Vec::new();
 
@@ -53,11 +60,6 @@ impl Mixeur {
         }
 
         symboles
-    }
-
-    pub fn mélanger_symboles() -> Vec<Symbole> {
-        let mixeur = Self::symboles();
-        return mixeur.mélanger(&mixeur.rouleaux);
     }
 }
 
