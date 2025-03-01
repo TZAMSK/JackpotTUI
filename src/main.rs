@@ -29,8 +29,9 @@ fn main() -> color_eyre::Result<()> {
 }
 
 fn run(terminal: &mut DefaultTerminal) -> Result<()> {
+    let mut application = Application::initialiser();
+
     loop {
-        let mut application = Application::initialiser();
         terminal.draw(|f| {
             let size = f.area();
             afficher_machine(f, size, &mut application);

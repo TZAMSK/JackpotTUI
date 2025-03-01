@@ -44,10 +44,8 @@ impl Mixeur {
 
     pub fn mélanger(&self, liste: &Vec<Symbole>) -> Vec<Symbole> {
         let symboles_pondérés =
-            match WeightedIndex::new(self.rouleaux.iter().map(|symbole| symbole.pondération)) {
-                Ok(index) => index,
-                Err(_) => return Vec::new(),
-            };
+            WeightedIndex::new(self.rouleaux.iter().map(|symbole| symbole.pondération))
+                .expect("Invalide");
 
         let mut symboles = Vec::new();
 
@@ -56,11 +54,5 @@ impl Mixeur {
         }
 
         symboles
-    }
-}
-
-impl Default for Mixeur {
-    fn default() -> Self {
-        Self { rouleaux: vec![] }
     }
 }
