@@ -42,10 +42,6 @@ impl Mixeur {
         }
     }
 
-    pub fn réinitialiser(&mut self) {
-        self.rouleaux = Mixeur::symboles().rouleaux.clone();
-    }
-
     pub fn mélanger(&self, liste: &Vec<Symbole>) -> Vec<Symbole> {
         let symboles_pondérés =
             match WeightedIndex::new(self.rouleaux.iter().map(|symbole| symbole.chance)) {

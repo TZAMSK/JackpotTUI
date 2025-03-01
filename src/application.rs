@@ -13,7 +13,6 @@ impl Application {
     }
 
     pub fn mélanger_symboles(&mut self) {
-        self.mixeur.réinitialiser();
         self.symboles = self.mixeur.mélanger(&self.mixeur.rouleaux);
     }
 }

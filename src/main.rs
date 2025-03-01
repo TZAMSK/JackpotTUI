@@ -32,7 +32,7 @@ fn run(terminal: &mut DefaultTerminal) -> Result<()> {
     loop {
         let mut application = Application::initialiser();
         terminal.draw(|f| {
-            let size = f.size();
+            let size = f.area();
             afficher_machine(f, size, &mut application);
         })?;
 
