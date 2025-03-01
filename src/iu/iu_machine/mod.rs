@@ -6,7 +6,7 @@ use ratatui::{
 };
 
 use crate::iu::constants::{CONTENUE, CONTROLES, TITRE, TITRE_APPLICATION};
-use crate::symboles::{Symbole, Type};
+use crate::symboles::mixeur::Mixeur;
 
 pub fn afficher_machine(frame: &mut Frame, zone_principal: Rect) {
     let layout_principal = Layout::default()
@@ -39,15 +39,7 @@ pub fn afficher_machine(frame: &mut Frame, zone_principal: Rect) {
         )
         .split(layout_principal[1]);
 
-    let citron = Symbole {
-        type_: Type::Citron,
-    };
-
-    let diamant = Symbole {
-        type_: Type::Diamant,
-    };
-
-    let symboles = [&citron, &diamant, &citron];
+    let symboles = Mixeur::mélanger_symboles();
 
     for (index, symbole) in symboles.iter().enumerate() {
         frame.render_widget(
