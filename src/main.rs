@@ -11,7 +11,7 @@ use ratatui::crossterm::execute;
 use ratatui::DefaultTerminal;
 
 use controle::traiter_événement_clavier;
-use iu::iu_machine::afficher_machine;
+use iu::iu_machine::{afficher_machine, afficher_mise};
 
 fn main() -> color_eyre::Result<()> {
     color_eyre::install()?;
@@ -34,7 +34,7 @@ fn run(terminal: &mut DefaultTerminal) -> Result<()> {
     loop {
         terminal.draw(|f| {
             let size = f.area();
-            afficher_machine(f, size, &mut application);
+            afficher_mise(f, size, &mut application);
         })?;
 
         if let Err(_) = traiter_événement_clavier(&mut application) {

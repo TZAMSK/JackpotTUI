@@ -88,3 +88,32 @@ pub fn afficher_machine(frame: &mut Frame, zone_principal: Rect, application: &m
 
     frame.render_widget(Paragraph::new(CONTROLES), layout_principal[3]);
 }
+
+pub fn afficher_mise(frame: &mut Frame, zone_principal: Rect, application: &mut Application) {
+    let fenêtre_zone = centrer_rect(20, 8, zone_principal);
+    let fenêtre_block = Block::default()
+        .title("Popup Title")
+        .title_alignment(Alignment::Center)
+        .borders(Borders::ALL)
+        .border_type(BorderType::Rounded)
+        .style(Style::default().bg(Color::DarkGray));
+
+    let fenêtre_contenu = Paragraph::new("aa".to_string())
+        .block(fenêtre_block)
+        .alignment(Alignment::Center);
+
+    frame.render_widget(fenêtre_contenu, fenêtre_zone);
+}
+
+pub fn centrer_rect(pourcentage_x: u16, pourcentage_y: u16, r: Rect) -> Rect {
+    let longueur = r.width * pourcentage_x / 100;
+    let hauteur = r.height * pourcentage_y / 100;
+    let marge_droit_gauche = (r.width - longueur) / 2;
+    let marge_haut_bas = (r.height - hauteur) / 2;
+    Rect {
+        x: marge_droit_gauche,
+        y: marge_haut_bas,
+        width: longueur,
+        height: hauteur,
+    }
+}
