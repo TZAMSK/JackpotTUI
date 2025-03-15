@@ -6,8 +6,8 @@ use ratatui::{
 };
 
 use crate::{
-    application::Application,
-    iu::constants::{CONTENUE, CONTROLES, TITRE, TITRE_APPLICATION},
+    application::{Application, SaisieMode},
+    iu::constants::{CONTENUE, TITRE, TITRE_APPLICATION},
 };
 
 pub fn afficher_machine(frame: &mut Frame, zone_principal: Rect, application: &mut Application) {
@@ -86,23 +86,40 @@ pub fn afficher_machine(frame: &mut Frame, zone_principal: Rect, application: &m
         );
     }
 
-    frame.render_widget(Paragraph::new(CONTROLES), layout_principal[3]);
+    frame.render_widget(
+        Paragraph::new(application.contrôle_indices()),
+        layout_principal[3],
+    );
 }
 
 pub fn afficher_mise(frame: &mut Frame, zone_principal: Rect, application: &mut Application) {
+    let style_couleur = match application.saisie_mode {
+        SaisieMode::Normale => Style::default(),
+        SaisieMode::Édition => Color::Yellow.into(),
+    };
+
+    let défilement_saisie = application
+        .saisie
+        .visual_scroll(zone_principal.width as usize);
+
     let fenêtre_zone = centrer_rect(20, 8, zone_principal);
     let fenêtre_block = Block::default()
         .title("Popup Title")
         .title_alignment(Alignment::Center)
         .borders(Borders::ALL)
         .border_type(BorderType::Rounded)
-        .style(Style::default().bg(Color::DarkGray));
+        .style(style_couleur.bg(Color::DarkGray));
 
-    let fenêtre_contenu = Paragraph::new("aa".to_string())
+    let fenêtre_contenu = Paragraph::new(application.saisie.value())
         .block(fenêtre_block)
         .alignment(Alignment::Center);
 
     frame.render_widget(fenêtre_contenu, fenêtre_zone);
+
+    if application.saisie_mode == SaisieMode::Édition {
+        let x = application.saisie.visual_cursor().max(défilement_saisie) - défilement_saisie + 1;
+        frame.set_cursor_position((zone_principal.x + x as u16, zone_principal.y + 1));
+    }
 }
 
 pub fn centrer_rect(pourcentage_x: u16, pourcentage_y: u16, r: Rect) -> Rect {

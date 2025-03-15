@@ -19,8 +19,6 @@ pub static CONTENUE: [&str; 3] = [
     "TOURNER",
 ];
 
-pub const CONTROLES: &str = "<q> Quitter\n<w>Changer mise\n<e> Changer totale\n<espace> Tourner";
-
 pub const CITRON_ART: &str = r"
 ⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⢀⣀⣀⣀⣀⣀⣀⣀⣀⣀⠀⠀⠀⠀⠀
 ⠀⠀⠀⠀⠀⢀⣀⣠⣤⣴⣶⡶⢿⣿⣿⣿⠿⠿⠿⠿⠟⠛⢋⣁⣤⡴⠂⣠⡆⠀

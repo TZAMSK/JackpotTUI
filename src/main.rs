@@ -34,7 +34,7 @@ fn run(terminal: &mut DefaultTerminal) -> Result<()> {
     loop {
         terminal.draw(|f| {
             let size = f.area();
-            afficher_mise(f, size, &mut application);
+            afficher_machine(f, size, &mut application);
         })?;
 
         if let Err(_) = traiter_événement_clavier(&mut application) {
