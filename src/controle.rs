@@ -24,9 +24,13 @@ pub fn traiter_événement_clavier(application: &mut Application) -> AppResultat
                 SaisieMode::Édition => match key.code {
                     event::KeyCode::Esc => application.arrêter_édition(),
                     event::KeyCode::Enter => application.soumettre(),
-                    _ => {
+                    event::KeyCode::Char(c) if c.is_digit(10) => {
                         application.saisie.handle_event(&event);
                     }
+                    event::KeyCode::Backspace => {
+                        application.saisie.handle_event(&event);
+                    }
+                    _ => {}
                 },
             }
         }
