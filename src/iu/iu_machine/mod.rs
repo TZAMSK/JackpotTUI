@@ -109,7 +109,7 @@ pub fn afficher_fenêtre_contextuelle(
     application: &mut Application,
     titre: &str,
 ) {
-    let fenêtre_zone = centrer_rect(20, 8, zone_principal);
+    let fenêtre_zone = centrer_rect(20, 7, zone_principal);
 
     let défilement_saisie = application
         .saisie
@@ -122,9 +122,7 @@ pub fn afficher_fenêtre_contextuelle(
         .border_type(BorderType::Rounded)
         .style(Style::new().fg(Color::Yellow).bg(Color::DarkGray));
 
-    let fenêtre_contenu = Paragraph::new(application.saisie.value())
-        .block(fenêtre_block)
-        .alignment(Alignment::Center);
+    let fenêtre_contenu = Paragraph::new(application.saisie.value()).block(fenêtre_block);
 
     frame.render_widget(Clear, fenêtre_zone);
     frame.render_widget(fenêtre_contenu, fenêtre_zone);
