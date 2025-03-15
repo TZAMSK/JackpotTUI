@@ -1,7 +1,7 @@
 use ratatui::{
     layout::{Alignment, Constraint, Direction, Layout, Rect},
     style::{Color, Style},
-    widgets::{Block, BorderType, Borders, Padding, Paragraph},
+    widgets::{Block, BorderType, Borders, Clear, Padding, Paragraph},
     Frame,
 };
 
@@ -90,6 +90,10 @@ pub fn afficher_machine(frame: &mut Frame, zone_principal: Rect, application: &m
         Paragraph::new(application.contrôle_indices()),
         layout_principal[3],
     );
+
+    if application.affichage_contextuel {
+        afficher_mise(frame, zone_principal, application);
+    }
 }
 
 pub fn afficher_mise(frame: &mut Frame, zone_principal: Rect, application: &mut Application) {
@@ -114,6 +118,7 @@ pub fn afficher_mise(frame: &mut Frame, zone_principal: Rect, application: &mut 
         .block(fenêtre_block)
         .alignment(Alignment::Center);
 
+    frame.render_widget(Clear, fenêtre_zone);
     frame.render_widget(fenêtre_contenu, fenêtre_zone);
 
     if application.saisie_mode == SaisieMode::Édition {

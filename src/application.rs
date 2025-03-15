@@ -7,6 +7,7 @@ pub struct Application {
     pub symboles: Vec<Symbole>,
     pub saisie: Input,
     pub saisie_mode: SaisieMode,
+    pub affichage_contextuel: bool,
 }
 
 #[derive(PartialEq)]
@@ -24,6 +25,7 @@ impl Application {
             symboles,
             saisie: Input::default(),
             saisie_mode: SaisieMode::Normale,
+            affichage_contextuel: false,
         }
     }
 
@@ -32,11 +34,13 @@ impl Application {
     }
 
     pub fn éditer(&mut self) {
-        self.saisie_mode = SaisieMode::Édition
+        self.saisie_mode = SaisieMode::Édition;
+        self.affichage_contextuel = true;
     }
 
     pub fn arrêter_édition(&mut self) {
-        self.saisie_mode = SaisieMode::Normale
+        self.saisie_mode = SaisieMode::Normale;
+        self.affichage_contextuel = false;
     }
 
     pub fn contrôle_indices(&self) -> &'static str {
@@ -48,4 +52,6 @@ impl Application {
             SaisieMode::Édition => "<esc> Quitter mode édition\n<enter> Enregistrer",
         }
     }
+
+    pub fn soumettre(&self) {}
 }
