@@ -3,7 +3,7 @@ use std::error::Error;
 use crossterm::event;
 use ratatui::crossterm::event::{Event, KeyEventKind};
 
-use crate::application::{Application, SaisieMode};
+use crate::application::{Application, SaisieMode, TypeContextuel};
 
 pub type AppResultat<T> = std::result::Result<T, Box<dyn Error>>;
 
@@ -14,7 +14,8 @@ pub fn traiter_événement_clavier(application: &mut Application) -> AppResultat
                 SaisieMode::Normale => match key.code {
                     event::KeyCode::Char('q') => return Err("erreur".to_string().into()),
                     event::KeyCode::Char(' ') => application.mélanger_symboles(),
-                    event::KeyCode::Char('e') => application.éditer(),
+                    event::KeyCode::Char('e') => application.éditer(TypeContextuel::Totale),
+                    event::KeyCode::Char('w') => application.éditer(TypeContextuel::Mise),
                     _ => {}
                 },
                 SaisieMode::Édition => match key.code {

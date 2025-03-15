@@ -6,7 +6,7 @@ use ratatui::{
 };
 
 use crate::{
-    application::{Application, SaisieMode},
+    application::{Application, SaisieMode, TypeContextuel},
     iu::constants::{CONTENUE, TITRE, TITRE_APPLICATION},
 };
 
@@ -92,27 +92,35 @@ pub fn afficher_machine(frame: &mut Frame, zone_principal: Rect, application: &m
     );
 
     if application.affichage_contextuel {
-        afficher_mise(frame, zone_principal, application);
+        match application.type_contextuel {
+            TypeContextuel::Mise => {
+                afficher_fenêtre_contextuelle(frame, zone_principal, application, "Changer mise")
+            }
+            TypeContextuel::Totale => {
+                afficher_fenêtre_contextuelle(frame, zone_principal, application, "Changer totale")
+            }
+        }
     }
 }
 
-pub fn afficher_mise(frame: &mut Frame, zone_principal: Rect, application: &mut Application) {
-    let style_couleur = match application.saisie_mode {
-        SaisieMode::Normale => Style::default(),
-        SaisieMode::Édition => Color::Yellow.into(),
-    };
+pub fn afficher_fenêtre_contextuelle(
+    frame: &mut Frame,
+    zone_principal: Rect,
+    application: &mut Application,
+    titre: &str,
+) {
+    let fenêtre_zone = centrer_rect(20, 8, zone_principal);
 
     let défilement_saisie = application
         .saisie
-        .visual_scroll(zone_principal.width as usize);
+        .visual_scroll(fenêtre_zone.width as usize);
 
-    let fenêtre_zone = centrer_rect(20, 8, zone_principal);
     let fenêtre_block = Block::default()
-        .title("Popup Title")
+        .title(titre.to_string())
         .title_alignment(Alignment::Center)
         .borders(Borders::ALL)
         .border_type(BorderType::Rounded)
-        .style(style_couleur.bg(Color::DarkGray));
+        .style(Style::new().fg(Color::Yellow).bg(Color::DarkGray));
 
     let fenêtre_contenu = Paragraph::new(application.saisie.value())
         .block(fenêtre_block)
@@ -123,7 +131,7 @@ pub fn afficher_mise(frame: &mut Frame, zone_principal: Rect, application: &mut 
 
     if application.saisie_mode == SaisieMode::Édition {
         let x = application.saisie.visual_cursor().max(défilement_saisie) - défilement_saisie + 1;
-        frame.set_cursor_position((zone_principal.x + x as u16, zone_principal.y + 1));
+        frame.set_cursor_position((fenêtre_zone.x + x as u16, fenêtre_zone.y + 1));
     }
 }
 

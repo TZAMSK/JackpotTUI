@@ -11,7 +11,7 @@ use ratatui::crossterm::execute;
 use ratatui::DefaultTerminal;
 
 use controle::traiter_événement_clavier;
-use iu::iu_machine::{afficher_machine, afficher_mise};
+use iu::iu_machine::afficher_machine;
 
 fn main() -> color_eyre::Result<()> {
     color_eyre::install()?;

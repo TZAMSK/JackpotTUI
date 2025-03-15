@@ -8,12 +8,18 @@ pub struct Application {
     pub saisie: Input,
     pub saisie_mode: SaisieMode,
     pub affichage_contextuel: bool,
+    pub type_contextuel: TypeContextuel,
 }
 
 #[derive(PartialEq)]
 pub enum SaisieMode {
     Normale,
     Édition,
+}
+
+pub enum TypeContextuel {
+    Mise,
+    Totale,
 }
 
 impl Application {
@@ -26,6 +32,7 @@ impl Application {
             saisie: Input::default(),
             saisie_mode: SaisieMode::Normale,
             affichage_contextuel: false,
+            type_contextuel: TypeContextuel::Mise,
         }
     }
 
@@ -33,8 +40,9 @@ impl Application {
         self.symboles = self.mixeur.mélanger(&self.mixeur.rouleaux);
     }
 
-    pub fn éditer(&mut self) {
+    pub fn éditer(&mut self, type_contextuel: TypeContextuel) {
         self.saisie_mode = SaisieMode::Édition;
+        self.type_contextuel = type_contextuel;
         self.affichage_contextuel = true;
     }
 
