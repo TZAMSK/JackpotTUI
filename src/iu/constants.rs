@@ -1,3 +1,5 @@
+use crate::symboles::{Symbole, Type};
+
 pub const TITRE_APPLICATION: &str = r"
    ___            _                _ _____     _ 
   |_  |          | |              | |_   _|   (_)
@@ -12,6 +14,37 @@ pub const TITRE_APPLICATION: &str = r"
 ";
 
 pub const TITRE: [&str; 3] = ["Montant", "Paiement", "[ESPACE]"];
+
+pub const SYMBOLES: [Symbole; 7] = [
+    Symbole {
+        type_: Type::Citron,
+        pondération: 20,
+    },
+    Symbole {
+        type_: Type::Cloche,
+        pondération: 19,
+    },
+    Symbole {
+        type_: Type::Cerise,
+        pondération: 15,
+    },
+    Symbole {
+        type_: Type::Bière,
+        pondération: 14,
+    },
+    Symbole {
+        type_: Type::Étoile,
+        pondération: 14,
+    },
+    Symbole {
+        type_: Type::Banane,
+        pondération: 21,
+    },
+    Symbole {
+        type_: Type::Diamant,
+        pondération: 7,
+    },
+];
 
 pub const CITRON_ART: &str = r"
 ⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⢀⣀⣀⣀⣀⣀⣀⣀⣀⣀⠀⠀⠀⠀⠀

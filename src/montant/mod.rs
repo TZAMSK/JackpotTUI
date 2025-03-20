@@ -1,5 +1,3 @@
-use std::slice::Chunks;
-
 pub struct Montant {
     pub mise: f32,
     pub total: f32,
@@ -16,7 +14,15 @@ impl Montant {
     }
 
     pub fn dépenser(&mut self) {
-        self.total -= self.mise
+        self.total -= self.mise;
+        self.perdu();
+    }
+
+    fn perdu(&mut self) {
+        if self.total <= 0.0 {
+            self.total = 0.0;
+            self.mise = 0.0;
+        }
     }
 
     pub fn afficher(&self) -> Vec<String> {

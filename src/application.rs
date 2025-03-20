@@ -1,8 +1,9 @@
 use tui_input::Input;
 
 use crate::{
+    iu::constants::SYMBOLES,
     montant::Montant,
-    symboles::{mixeur::Mixeur, Symbole},
+    symboles::{mixeur::Mixeur, Symbole, Type},
 };
 
 pub struct Application {
@@ -34,13 +35,34 @@ impl Application {
             mise: 2.0,
             total: 90.0,
             gains: vec![
-                ("💠💠💠".to_string(), 2.0),
-                ("🍺🍺🍺".to_string(), 2.2),
-                ("⭐⭐⭐".to_string(), 2.0),
-                ("🍒🍒🍒".to_string(), 1.0),
-                ("🔔🔔🔔".to_string(), 2.0),
-                ("🍋🍋🍋".to_string(), 1.4),
-                ("🍌🍌🍌".to_string(), 2.0),
+                (
+                    "💠💠💠".to_string(),
+                    Self::calculer_payement_combinaison(&SYMBOLES, vec![Type::Diamant; 3]),
+                ),
+                (
+                    "🍺🍺🍺".to_string(),
+                    Self::calculer_payement_combinaison(&SYMBOLES, vec![Type::Bière; 3]),
+                ),
+                (
+                    "⭐⭐⭐".to_string(),
+                    Self::calculer_payement_combinaison(&SYMBOLES, vec![Type::Étoile; 3]),
+                ),
+                (
+                    "🍒🍒🍒".to_string(),
+                    Self::calculer_payement_combinaison(&SYMBOLES, vec![Type::Cerise; 3]),
+                ),
+                (
+                    "🔔🔔🔔".to_string(),
+                    Self::calculer_payement_combinaison(&SYMBOLES, vec![Type::Cloche; 3]),
+                ),
+                (
+                    "🍋🍋🍋".to_string(),
+                    Self::calculer_payement_combinaison(&SYMBOLES, vec![Type::Citron; 3]),
+                ),
+                (
+                    "🍌🍌🍌".to_string(),
+                    Self::calculer_payement_combinaison(&SYMBOLES, vec![Type::Banane; 3]),
+                ),
             ],
         };
 
@@ -90,5 +112,36 @@ impl Application {
                 .montant
                 .ajouter_total(self.saisie.value().parse::<f32>().unwrap()),
         }
+    }
+
+    pub fn calculer_payement_combinaison(symboles: &[Symbole], combinaison: Vec<Type>) -> f32 {
+        let mut probabilité = 1.0;
+        let taux_de_retour_au_joueur = 0.95;
+
+        for pondération in Self::pondérations(symboles, combinaison) {
+            probabilité *= pondération / Self::poids_total(symboles)
+        }
+
+        let payement = taux_de_retour_au_joueur / probabilité;
+        payement.round()
+    }
+
+    pub fn poids_total(symboles: &[Symbole]) -> f32 {
+        symboles
+            .iter()
+            .map(|symbole| symbole.pondération as f32)
+            .sum()
+    }
+
+    pub fn pondérations(symboles: &[Symbole], combinaison: Vec<Type>) -> Vec<f32> {
+        combinaison
+            .iter()
+            .filter_map(|type_cherché| {
+                symboles
+                    .iter()
+                    .find(|&symbole| symbole.type_ == *type_cherché)
+                    .map(|symbole| symbole.pondération.clone() as f32)
+            })
+            .collect::<Vec<_>>()
     }
 }

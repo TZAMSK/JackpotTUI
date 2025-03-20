@@ -1,6 +1,6 @@
 use rand::distr::{weighted::WeightedIndex, Distribution};
 
-use crate::symboles::{Symbole, Type};
+use crate::{iu::constants::SYMBOLES, symboles::Symbole};
 
 pub struct Mixeur {
     pub rouleaux: Vec<Symbole>,
@@ -9,36 +9,7 @@ pub struct Mixeur {
 impl Mixeur {
     pub fn symboles() -> Self {
         Self {
-            rouleaux: vec![
-                Symbole {
-                    type_: Type::Citron,
-                    pondération: 20,
-                },
-                Symbole {
-                    type_: Type::Cloche,
-                    pondération: 19,
-                },
-                Symbole {
-                    type_: Type::Cerise,
-                    pondération: 15,
-                },
-                Symbole {
-                    type_: Type::Bière,
-                    pondération: 14,
-                },
-                Symbole {
-                    type_: Type::Étoile,
-                    pondération: 14,
-                },
-                Symbole {
-                    type_: Type::Banane,
-                    pondération: 21,
-                },
-                Symbole {
-                    type_: Type::Diamant,
-                    pondération: 7,
-                },
-            ],
+            rouleaux: SYMBOLES.to_vec(),
         }
     }
 
