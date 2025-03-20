@@ -7,7 +7,7 @@ use ratatui::{
 
 use crate::{
     application::{Application, SaisieMode, TypeContextuel},
-    iu::constants::{CONTENUE, TITRE, TITRE_APPLICATION},
+    iu::constants::{TITRE, TITRE_APPLICATION},
 };
 
 pub fn afficher_machine(frame: &mut Frame, zone_principal: Rect, application: &mut Application) {
@@ -68,7 +68,11 @@ pub fn afficher_machine(frame: &mut Frame, zone_principal: Rect, application: &m
         )
         .split(layout_principal[2]);
 
-    for ((index, titre), contenue) in TITRE.iter().enumerate().zip(CONTENUE.iter()) {
+    for ((index, titre), contenue) in TITRE
+        .iter()
+        .enumerate()
+        .zip(application.montant.affichier().iter())
+    {
         let couleur = match index {
             0 | 1 => Color::Yellow,
             _ => Color::Green,

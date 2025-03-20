@@ -1,6 +1,7 @@
 mod application;
 mod controle;
 mod iu;
+mod montant;
 mod symboles;
 mod tests;
 
