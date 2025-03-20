@@ -7,11 +7,11 @@ pub struct Montant {
 }
 
 impl Montant {
-    pub fn changerMise(&mut self, mise: f32) {
+    pub fn changer_mise(&mut self, mise: f32) {
         self.mise = mise;
     }
 
-    pub fn ajouterTotal(&mut self, total: f32) {
+    pub fn ajouter_total(&mut self, total: f32) {
         self.total += total;
     }
 
@@ -19,7 +19,7 @@ impl Montant {
         self.total -= self.mise
     }
 
-    pub fn affichier(&self) -> Vec<String> {
+    pub fn afficher(&self) -> Vec<String> {
         let mut affichage = Vec::new();
 
         affichage.push(format!(

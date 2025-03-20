@@ -34,13 +34,13 @@ impl Application {
             mise: 2.0,
             total: 90.0,
             gains: vec![
-                ("💠 💠 💠".to_string(), 2.0),
-                ("🍺 🍺 🍺".to_string(), 2.2),
-                ("⭐ ⭐ ⭐".to_string(), 2.0),
-                ("🍒 🍒 🍒".to_string(), 1.0),
-                ("🔔 🔔 🔔".to_string(), 2.0),
-                ("🍋 🍋 🍋".to_string(), 1.4),
-                ("🍌 🍌 🍌".to_string(), 2.0),
+                ("💠💠💠".to_string(), 2.0),
+                ("🍺🍺🍺".to_string(), 2.2),
+                ("⭐⭐⭐".to_string(), 2.0),
+                ("🍒🍒🍒".to_string(), 1.0),
+                ("🔔🔔🔔".to_string(), 2.0),
+                ("🍋🍋🍋".to_string(), 1.4),
+                ("🍌🍌🍌".to_string(), 2.0),
             ],
         };
 
@@ -68,6 +68,7 @@ impl Application {
     pub fn arrêter_édition(&mut self) {
         self.saisie_mode = SaisieMode::Normale;
         self.affichage_contextuel = false;
+        self.saisie.reset();
     }
 
     pub fn contrôle_indices(&self) -> &'static str {
@@ -80,5 +81,14 @@ impl Application {
         }
     }
 
-    pub fn soumettre(&self) {}
+    pub fn soumettre(&mut self) {
+        match self.type_contextuel {
+            TypeContextuel::Mise => self
+                .montant
+                .changer_mise(self.saisie.value().parse::<f32>().unwrap()),
+            TypeContextuel::Totale => self
+                .montant
+                .ajouter_total(self.saisie.value().parse::<f32>().unwrap()),
+        }
+    }
 }

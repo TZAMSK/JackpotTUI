@@ -16,14 +16,20 @@ pub fn traiter_événement_clavier(application: &mut Application) -> AppResultat
             match application.saisie_mode {
                 SaisieMode::Normale => match key.code {
                     event::KeyCode::Char('q') => return Err("erreur".to_string().into()),
-                    event::KeyCode::Char(' ') => application.mélanger_symboles(),
+                    event::KeyCode::Char(' ') => {
+                        application.mélanger_symboles();
+                        application.montant.dépenser();
+                    }
                     event::KeyCode::Char('e') => application.éditer(TypeContextuel::Totale),
                     event::KeyCode::Char('w') => application.éditer(TypeContextuel::Mise),
                     _ => {}
                 },
                 SaisieMode::Édition => match key.code {
                     event::KeyCode::Esc => application.arrêter_édition(),
-                    event::KeyCode::Enter => application.soumettre(),
+                    event::KeyCode::Enter => {
+                        application.soumettre();
+                        application.arrêter_édition();
+                    }
                     event::KeyCode::Char(c) if c.is_digit(10) => {
                         application.saisie.handle_event(&event);
                     }

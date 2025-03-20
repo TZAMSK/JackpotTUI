@@ -71,7 +71,7 @@ pub fn afficher_machine(frame: &mut Frame, zone_principal: Rect, application: &m
     for ((index, titre), contenue) in TITRE
         .iter()
         .enumerate()
-        .zip(application.montant.affichier().iter())
+        .zip(application.montant.afficher().iter())
     {
         let couleur = match index {
             0 | 1 => Color::Yellow,
