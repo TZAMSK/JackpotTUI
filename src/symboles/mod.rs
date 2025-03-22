@@ -17,7 +17,7 @@ pub enum Type {
     Diamant,
 }
 
-#[derive(Clone)]
+#[derive(Clone, PartialEq)]
 pub struct Symbole {
     pub type_: Type,
     pub pondération: u8,

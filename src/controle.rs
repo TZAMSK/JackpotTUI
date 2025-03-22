@@ -19,6 +19,7 @@ pub fn traiter_événement_clavier(application: &mut Application) -> AppResultat
                     event::KeyCode::Char(' ') => {
                         application.mélanger_symboles();
                         application.montant.dépenser();
+                        application.payer();
                     }
                     event::KeyCode::Char('e') => application.éditer(TypeContextuel::Totale),
                     event::KeyCode::Char('w') => application.éditer(TypeContextuel::Mise),

@@ -13,6 +13,10 @@ impl Montant {
         self.total += total;
     }
 
+    pub fn retour(&mut self) {
+        self.total += self.mise * 2.0
+    }
+
     pub fn dépenser(&mut self) {
         self.total -= self.mise;
         self.perdu();

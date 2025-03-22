@@ -18,31 +18,31 @@ pub const TITRE: [&str; 3] = ["Montant", "Paiement", "[ESPACE]"];
 pub const SYMBOLES: [Symbole; 7] = [
     Symbole {
         type_: Type::Citron,
-        pondération: 20,
+        pondération: 40,
     },
     Symbole {
         type_: Type::Cloche,
-        pondération: 19,
+        pondération: 16,
     },
     Symbole {
         type_: Type::Cerise,
-        pondération: 15,
+        pondération: 8,
     },
     Symbole {
         type_: Type::Bière,
-        pondération: 14,
+        pondération: 4,
     },
     Symbole {
         type_: Type::Étoile,
-        pondération: 14,
+        pondération: 4,
     },
     Symbole {
         type_: Type::Banane,
-        pondération: 21,
+        pondération: 3,
     },
     Symbole {
         type_: Type::Diamant,
-        pondération: 7,
+        pondération: 1,
     },
 ];
 

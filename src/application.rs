@@ -37,31 +37,31 @@ impl Application {
             gains: vec![
                 (
                     "💠💠💠".to_string(),
-                    Self::calculer_payement_combinaison(&SYMBOLES, vec![Type::Diamant; 3]),
+                    Self::calculer_paiement_combinaison(&SYMBOLES, vec![Type::Diamant; 3]),
                 ),
                 (
                     "🍺🍺🍺".to_string(),
-                    Self::calculer_payement_combinaison(&SYMBOLES, vec![Type::Bière; 3]),
+                    Self::calculer_paiement_combinaison(&SYMBOLES, vec![Type::Bière; 3]),
                 ),
                 (
                     "⭐⭐⭐".to_string(),
-                    Self::calculer_payement_combinaison(&SYMBOLES, vec![Type::Étoile; 3]),
+                    Self::calculer_paiement_combinaison(&SYMBOLES, vec![Type::Étoile; 3]),
                 ),
                 (
                     "🍒🍒🍒".to_string(),
-                    Self::calculer_payement_combinaison(&SYMBOLES, vec![Type::Cerise; 3]),
+                    Self::calculer_paiement_combinaison(&SYMBOLES, vec![Type::Cerise; 3]),
                 ),
                 (
                     "🔔🔔🔔".to_string(),
-                    Self::calculer_payement_combinaison(&SYMBOLES, vec![Type::Cloche; 3]),
+                    Self::calculer_paiement_combinaison(&SYMBOLES, vec![Type::Cloche; 3]),
                 ),
                 (
                     "🍋🍋🍋".to_string(),
-                    Self::calculer_payement_combinaison(&SYMBOLES, vec![Type::Citron; 3]),
+                    Self::calculer_paiement_combinaison(&SYMBOLES, vec![Type::Citron; 3]),
                 ),
                 (
                     "🍌🍌🍌".to_string(),
-                    Self::calculer_payement_combinaison(&SYMBOLES, vec![Type::Banane; 3]),
+                    Self::calculer_paiement_combinaison(&SYMBOLES, vec![Type::Banane; 3]),
                 ),
             ],
         };
@@ -114,16 +114,16 @@ impl Application {
         }
     }
 
-    pub fn calculer_payement_combinaison(symboles: &[Symbole], combinaison: Vec<Type>) -> f32 {
+    pub fn calculer_paiement_combinaison(symboles: &[Symbole], combinaison: Vec<Type>) -> f32 {
         let mut probabilité = 1.0;
-        let taux_de_retour_au_joueur = 0.95;
+        let taux_de_retour_au_joueur = 0.45;
 
         for pondération in Self::pondérations(symboles, combinaison) {
             probabilité *= pondération / Self::poids_total(symboles)
         }
 
-        let payement = taux_de_retour_au_joueur / probabilité;
-        payement.round()
+        let paiement = taux_de_retour_au_joueur / probabilité;
+        paiement.round()
     }
 
     pub fn poids_total(symboles: &[Symbole]) -> f32 {
@@ -143,5 +143,22 @@ impl Application {
                     .map(|symbole| symbole.pondération.clone() as f32)
             })
             .collect::<Vec<_>>()
+    }
+
+    pub fn payer(&mut self) {
+        if self.similaire(self.symboles.clone()) {
+            let symbole_type = self.symboles[0].type_.clone();
+            let montant_gagné =
+                Self::calculer_paiement_combinaison(&SYMBOLES, vec![symbole_type; 3])
+                    * self.montant.mise;
+            self.montant.ajouter_total(montant_gagné);
+        }
+    }
+
+    pub fn similaire(&self, symboles: Vec<Symbole>) -> bool {
+        symboles
+            .get(0)
+            .map(|premier_symbole| symboles.iter().all(|x| x.type_ == premier_symbole.type_))
+            .unwrap_or(true)
     }
 }
