@@ -33,7 +33,7 @@ impl Application {
         let symboles = mixeur.mélanger(&mixeur.rouleaux);
         let montant = Montant {
             mise: 2.0,
-            total: 90.0,
+            total: 450.0,
             gains: vec![
                 (
                     "💠💠💠".to_string(),
